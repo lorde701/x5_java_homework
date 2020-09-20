@@ -31,5 +31,7 @@ public class Main {
         Calculator calculator = new Calculator(loggerFactory.createLogger());
         System.out.println(calculator.add(20, 1));
         System.out.println(calculator.divide(20, 0));
+        System.out.println(calculator.deduct(20, 7));
+        System.out.println(calculator.multiply(20, 2));
     }
 }
