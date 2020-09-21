@@ -1,5 +1,7 @@
 package ru.x5.homework5.task1;
 
+import ru.x5.homework5.task1.logger.*;
+
 import java.util.Scanner;
 
 public class Main {

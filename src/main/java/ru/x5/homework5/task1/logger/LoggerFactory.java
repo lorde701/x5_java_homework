@@ -1,4 +1,4 @@
-package ru.x5.homework5.task1;
+package ru.x5.homework5.task1.logger;
 
 import ru.x5.homework5.task1.logger.Logger;
 
