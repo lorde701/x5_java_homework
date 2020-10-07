@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 
-public class AccountServiceDB implements AccountService {
+public class AccountServiceFile implements AccountService {
 
     private final String FILE_PATH = "accounts.txt";
     private final List<Account> defaultAccounts = Arrays.asList(
