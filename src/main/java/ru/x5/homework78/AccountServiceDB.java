@@ -72,10 +72,11 @@ public class AccountServiceDB implements AccountService {
     }
 
     private Account findByAccountId(int accountId) throws UnknownAccountException {
+        ResultSet resultSet = null;
         try (Connection con = DriverManager.getConnection(url);
              PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM ACCOUNTS WHERE ID = ?")) {
             preparedStatement.setInt(1, accountId);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 return new Account(resultSet.getInt(1),
                         resultSet.getNString(2),
@@ -86,6 +87,14 @@ public class AccountServiceDB implements AccountService {
         } catch (SQLException ex) {
             ex.printStackTrace();
             throw new RuntimeException("Не удалось выполнить действия с БД");
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }
