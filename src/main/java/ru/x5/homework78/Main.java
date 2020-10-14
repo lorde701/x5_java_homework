@@ -1,8 +1,34 @@
-package ru.x5.homework7;
+package ru.x5.homework78;
+
+import ru.x5.homework78.exception.NotEnoughMoneyException;
+import ru.x5.homework78.exception.UnknownAccountException;
+import ru.x5.homework78.storage.StorageFactory;
+import ru.x5.homework78.storage.StorageFactoryDB;
+import ru.x5.homework78.storage.StorageFactoryFile;
+import ru.x5.homework78.storage.StorageType;
+
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        AccountService service = new AccountServiceFile();
+        System.out.println("Выберите место хранения данных: FILE илм DB");
+        Scanner sc = new Scanner(System.in);
+        StorageType storageType = null;
+        try {
+            storageType = StorageType.valueOf(sc.next());
+        } catch (IllegalArgumentException ignore) {
+           throw new RuntimeException("Неверно выбрано место хранения данных");
+        }
+        StorageFactory storageFactory = null;
+        switch (storageType) {
+            case DB:
+                storageFactory = new StorageFactoryDB();
+                break;
+            case FILE:
+                storageFactory = new StorageFactoryFile();
+                break;
+        }
+        AccountService service = storageFactory.createAccountService();
         try {
             service.balance(3);
         } catch (UnknownAccountException e) {

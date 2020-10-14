@@ -1,16 +1,19 @@
-package ru.x5.homework7;
+package ru.x5.homework78;
+
+import ru.x5.homework78.exception.NotEnoughMoneyException;
+import ru.x5.homework78.exception.UnknownAccountException;
 
 import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 
 public class AccountServiceFile implements AccountService {
-
+    private static AccountServiceFile instance = null;
     private final String FILE_PATH = "accounts.txt";
     private final List<Account> defaultAccounts = Arrays.asList(
             new Account(1, "Петов", 123123),
             new Account(2, "Иванов", 5000),
-            new Account(3, "Сидоров", 34058),
+            new Account(3, "Сидоров", 34000),
             new Account(4, "Смирнов", 900000),
             new Account(5, "Курочкин", 6550),
             new Account(6, "Орлов", 6542),
@@ -19,6 +22,25 @@ public class AccountServiceFile implements AccountService {
             new Account(9, "Голубев", 349000),
             new Account(10, "Петухов", 570000)
     );
+
+    private AccountServiceFile() {
+        try {
+            File file = new File(FILE_PATH);
+            if (!file.exists()) {
+                file.createNewFile();
+                fullAccounts(defaultAccounts);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Не удалось выполнить действия с файлом");
+        }
+    }
+
+    public static AccountServiceFile getInstance() {
+        if (instance == null) {
+            instance = new AccountServiceFile();
+        }
+        return instance;
+    }
 
     @Override
     public void withdraw(int accountId, int amount) throws NotEnoughMoneyException, UnknownAccountException {
@@ -60,15 +82,6 @@ public class AccountServiceFile implements AccountService {
     }
 
     private Account findByAccountId(int accountId) throws UnknownAccountException {
-        try {
-            File file = new File(FILE_PATH);
-            if (!file.exists()) {
-                file.createNewFile();
-                fullAccounts(defaultAccounts);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("Не удалось выполнить действия с файлом");
-        }
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String str = null;
             while ((str = reader.readLine()) != null && str.length() != 0) {

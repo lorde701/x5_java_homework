@@ -1,4 +1,4 @@
-package ru.x5.homework7;
+package ru.x5.homework78;
 
 public class Account {
     private int id;

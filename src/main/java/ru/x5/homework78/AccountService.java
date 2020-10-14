@@ -1,4 +1,7 @@
-package ru.x5.homework7;
+package ru.x5.homework78;
+
+import ru.x5.homework78.exception.NotEnoughMoneyException;
+import ru.x5.homework78.exception.UnknownAccountException;
 
 public interface AccountService {
     void withdraw(int accountId, int amount) throws NotEnoughMoneyException, UnknownAccountException;
