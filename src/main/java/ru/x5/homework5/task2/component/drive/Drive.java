@@ -1,10 +1,12 @@
 package ru.x5.homework5.task2.component.drive;
 
-public class Drive {
-    private String producer;
-    private int memoryCapacityMb;
-    private DriveType type;
-    private DriveFormFactor formFactor;
+import ru.x5.homework5.task2.component.Component;
+
+public class Drive implements Component {
+    private final String producer;
+    private final int memoryCapacityMb;
+    private final DriveType type;
+    private final DriveFormFactor formFactor;
 
     public Drive(String producer, int memoryCapacityMb, DriveType type, DriveFormFactor formFactor) {
         this.producer = producer;
@@ -14,12 +16,17 @@ public class Drive {
     }
 
     @Override
-    public String toString() {
+    public String getInfo() {
         return "Drive{" +
                 "producer='" + producer + '\'' +
                 ", memoryCapacityMb=" + memoryCapacityMb +
                 ", type=" + type +
                 ", formFactor=" + formFactor +
                 '}';
+    }
+
+    @Override
+    public void start() {
+        System.out.println("Диск начала работать");
     }
 }

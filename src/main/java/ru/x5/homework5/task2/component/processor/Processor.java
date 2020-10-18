@@ -1,6 +1,8 @@
-package ru.x5.homework5.task2.component;
+package ru.x5.homework5.task2.component.processor;
 
-public class Processor {
+import ru.x5.homework5.task2.component.Component;
+
+public class Processor implements Component {
     private String name;
     private long clockSpeedMHz;
     private int numberOfCores;
@@ -16,7 +18,7 @@ public class Processor {
     }
 
     @Override
-    public String toString() {
+    public String getInfo() {
         return "Processor{" +
                 "name='" + name + '\'' +
                 ", clockSpeedMHz=" + clockSpeedMHz +
@@ -24,5 +26,10 @@ public class Processor {
                 ", cacheMb=" + cacheMb +
                 ", producer='" + producer + '\'' +
                 '}';
+    }
+
+    @Override
+    public void start() {
+        System.out.println("Процессор начал работать");
     }
 }

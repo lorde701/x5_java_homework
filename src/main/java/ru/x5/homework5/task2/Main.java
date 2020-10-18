@@ -1,5 +1,6 @@
 package ru.x5.homework5.task2;
 
+import ru.x5.homework5.task2.computer.Computer;
 import ru.x5.homework5.task2.computer.ComputerCost;
 import ru.x5.homework5.task2.computer.ComputerFacade;
 import ru.x5.homework5.task2.computer.ComputerType;
@@ -17,7 +18,9 @@ public class Main {
             }
 
             ComputerFacade computerFacade = new ComputerFacade();
-            System.out.println(computerFacade.create(computerType, computerCost));
+            Computer computer = computerFacade.create(computerType, computerCost);
+            computer.getInfo();
+            computer.start();
         } catch (CustomIllegalArgumentException e) {
             System.out.println(e.getMessage());
         }

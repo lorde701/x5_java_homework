@@ -1,33 +1,24 @@
 package ru.x5.homework5.task2.computer;
 
-import ru.x5.homework5.task2.component.*;
-import ru.x5.homework5.task2.component.drive.Drive;
-import ru.x5.homework5.task2.component.memory.Memory;
-import ru.x5.homework5.task2.component.videocard.VideoCard;
+import ru.x5.homework5.task2.component.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Computer {
-    private Processor processor;
-    private Memory memory;
-    private VideoCard videoCard;
-    private Drive drive;
-    private Monitor monitor;
+    private final List<Component> components = new ArrayList<>();
 
-    public Computer(Processor processor, Memory memory, VideoCard videoCard, Drive drive, Monitor monitor) {
-        this.processor = processor;
-        this.memory = memory;
-        this.videoCard = videoCard;
-        this.drive = drive;
-        this.monitor = monitor;
+    public void addComponent(Component component) {
+        components.add(component);
     }
 
-    @Override
-    public String toString() {
-        return "Computer{" +
-                "processor=" + processor +
-                ", memory=" + memory +
-                ", videoCard=" + videoCard +
-                ", drive=" + drive +
-                ", monitor='" + monitor + '\'' +
-                '}';
+    public void start() {
+        components.forEach(Component::start);
+    }
+
+    public void getInfo() {
+        System.out.println("-----Информация о компьютере-----");
+        components.forEach(comp -> System.out.println(comp.getInfo()));
+        System.out.println("---------------------------------");
     }
 }

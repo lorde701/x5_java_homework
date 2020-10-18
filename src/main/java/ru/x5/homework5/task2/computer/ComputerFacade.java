@@ -1,42 +1,31 @@
 package ru.x5.homework5.task2.computer;
 
 import ru.x5.homework5.task2.CustomIllegalArgumentException;
-import ru.x5.homework5.task2.component.videocard.CheapVideoCardStrategy;
-import ru.x5.homework5.task2.component.videocard.ExpensiveVideoCardStrategy;
-import ru.x5.homework5.task2.component.videocard.VideoCardStrategy;
 
 public class ComputerFacade {
 
     public Computer create(ComputerType type, ComputerCost cost) {
-        ComputerFactory computerFactory = null;
+        ComputerStrategy computerStrategy = null;
         switch (type) {
             case GAMING:
-                computerFactory = getGamingComputerFactory(cost);
+                computerStrategy = getGamingComputerStrategy(cost);
                 break;
             case OFFICE:
-                computerFactory = new OfficeComputerFactory();
+                computerStrategy = new OfficeComputerStrategy();
                 break;
             default:
                 throw new CustomIllegalArgumentException(String.format("Для типа %s не задана реализация", type));
         }
-        return computerFactory.createComputer();
+        return computerStrategy.createComputer();
     }
 
-    private GamingComputerFactory getGamingComputerFactory(ComputerCost cost) {
-        VideoCardStrategy videoCardStrategy = getVideoCardStrategy(cost);
-        return new GamingComputerFactory(videoCardStrategy);
-    }
-
-    private VideoCardStrategy getVideoCardStrategy(ComputerCost cost) {
+    private ComputerStrategy getGamingComputerStrategy(ComputerCost cost) {
         switch (cost) {
             case EXPENSIVE:
-                return new ExpensiveVideoCardStrategy();
+                return new ExpensiveGamingComputerStrategy();
             case CHEAP:
-                return new CheapVideoCardStrategy();
-            default:
-                throw new CustomIllegalArgumentException(String.format("Для типа %s не задана реализация", cost));
+                return new CheapGamingComputerStrategy();
         }
+        throw new CustomIllegalArgumentException("Не выбрана стоимость игрового компьютера");
     }
-
-
 }
